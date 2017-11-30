@@ -13,6 +13,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/test-data', function () {
+    $someTestData = [
+        [
+            'name' => 'Pehso',
+            'email' => 'test@test.cc'
+        ],
+        [
+            'name' => 'Ivan',
+            'email' => 'test@test.cc'
+        ]
+    ];
+    return $someTestData;
+});
+
+Route::get('/users', function () {
+    return \App\User::all();
+});
+
+Route::post('/users', function () {
+    $user = \App\User::create(request()->all());
+    return $user;
+});
+
+
+Route::delete('/users/{id}', function ($id) {
+    $user = \App\User::findOrFail($id);
+    $user->delete();
+    return [];
 });
